@@ -3,7 +3,7 @@ body {
 }
 
 #board {
-    background-color: black;
-    border-top: 5px solid skyblue;
-    border-bottom: 5px solid skyblue;
+    background-color: green;
+    border-top: 5px solid rgb(6, 6, 6);
+    border-bottom: 5px solid rgb(6, 6, 6);
 }
