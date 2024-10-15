@@ -6,7 +6,7 @@ let context;
 
 //players
 let playerWidth = 10;
-let playerHeight = 50;
+let playerHeight = 100;
 let playerVelocityY = 0;
 
 let player1 = {
@@ -136,7 +136,7 @@ function outOfBounds(yPosition) {
 function movePlayer(e) {
     //player1
     if (e.code == "KeyW") {
-        player1.velocityY = -3;
+        player1.velocityY = -4;
     }
     else if (e.code == "KeyS") {
         player1.velocityY = 3;
@@ -144,7 +144,7 @@ function movePlayer(e) {
 
     //player2
     if (e.code == "ArrowUp") {
-        player2.velocityY = -3;
+        player2.velocityY = -4;
     }
     else if (e.code == "ArrowDown") {
         player2.velocityY = 3;
