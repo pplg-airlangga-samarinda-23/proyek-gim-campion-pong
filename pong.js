@@ -6,7 +6,6 @@ let context;
 // players
 let playerWidth = 10;
 let playerHeight = 80;
-let playerHeight = 100;
 let playerVelocityY = 0;
 
 let player1 = {
@@ -124,7 +123,6 @@ function outOfBounds(yPosition) {
 }
 
 function movePlayer(e) {
-    HEAD
     if (e.code === "KeyW") {
         player1.velocityY = -4;
     } else if (e.code === "KeyS") {
@@ -135,17 +133,6 @@ function movePlayer(e) {
         player2.velocityY = -4;
     } else if (e.code === "ArrowDown") {
         player2.velocityY = 4;
-    //player1
-    if (e.code == "KeyW") {
-        player1.velocityY = -4;
-    }
-    else if (e.code == "KeyS") {
-        player1.velocityY = 3;
-    }
-
-    //player2
-    if (e.code == "ArrowUp") {
-        player2.velocityY = -4;
     }
 }
 
@@ -160,9 +147,9 @@ function stopPlayer(e) {
 
 function detectCollision(a, b) {
     return a.x < b.x + b.width &&
-           a.x + a.width > b.x &&
-           a.y < b.y + b.height &&
-           a.y + a.height > b.y;
+        a.x + a.width > b.x &&
+        a.y < b.y + b.height &&
+        a.y + a.height > b.y;
 }
 
 function resetGame(direction) {
@@ -187,7 +174,7 @@ function checkGameOver() {
         let winner = player1Score >= 5 ? "Player 1 Wins!" : "Player 2 Wins!";
         context.font = "30px sans-serif";
         context.fillText(winner, boardWidth / 2 - context.measureText(winner).width / 2, boardHeight / 2);
-        gameOver = true; 
+        gameOver = true;
     }
 }
 
