@@ -5,11 +5,8 @@ let context;
 
 // players
 let playerWidth = 10;
-<<<<<<< HEAD
 let playerHeight = 80;
-=======
 let playerHeight = 100;
->>>>>>> 57961160d6fa212fa30781bd34069fe643ea1ecf
 let playerVelocityY = 0;
 
 let player1 = {
@@ -127,7 +124,7 @@ function outOfBounds(yPosition) {
 }
 
 function movePlayer(e) {
-<<<<<<< HEAD
+    HEAD
     if (e.code === "KeyW") {
         player1.velocityY = -4;
     } else if (e.code === "KeyS") {
@@ -138,7 +135,6 @@ function movePlayer(e) {
         player2.velocityY = -4;
     } else if (e.code === "ArrowDown") {
         player2.velocityY = 4;
-=======
     //player1
     if (e.code == "KeyW") {
         player1.velocityY = -4;
@@ -150,7 +146,6 @@ function movePlayer(e) {
     //player2
     if (e.code == "ArrowUp") {
         player2.velocityY = -4;
->>>>>>> 57961160d6fa212fa30781bd34069fe643ea1ecf
     }
 }
 
