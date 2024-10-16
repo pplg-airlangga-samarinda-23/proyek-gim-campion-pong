@@ -1,9 +1,23 @@
 body {
     text-align: center;
+    margin: 0; /* Remove default margin */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: flex-start; /* Align items to the top */
+    height: 100vh; /* Full height */
 }
 
 #board {
-    background-color: green;
-    border-top: 5px solid rgb(6, 6, 6);
-    border-bottom: 5px solid rgb(6, 6, 6);
+    background-color: rgb(13, 153, 169);
+    border-top: 5px solid skyblue;
+    border-bottom: 5px solid skyblue;
+    margin-top: 20px; /* Add some space above the canvas */
+}
+
+#resettombol {
+    margin-top: 10px; 
+    background-color: rgb(116, 164, 232);/* Space between the button and the canvas */
+    color: aliceblue;
+    border-color: rgb(1, 1, 1);
 }

@@ -1,12 +1,11 @@
-//board
 let board;
 let boardWidth = 500;
 let boardHeight = 500;
 let context;
 
-//players
+// players
 let playerWidth = 10;
-let playerHeight = 50;
+let playerHeight = 80;
 let playerVelocityY = 0;
 
 let player1 = {
@@ -15,7 +14,7 @@ let player1 = {
     width: playerWidth,
     height: playerHeight,
     velocityY: 0
-}
+};
 
 let player2 = {
     x: boardWidth - playerWidth - 10,
@@ -23,9 +22,9 @@ let player2 = {
     width: playerWidth,
     height: playerHeight,
     velocityY: 0
-}
+};
 
-//ball
+// ball
 let ballWidth = 10;
 let ballHeight = 10;
 let ball = {
@@ -35,36 +34,36 @@ let ball = {
     height: ballHeight,
     velocityX: 1,
     velocityY: 2
-}
+};
 
 let player1Score = 0;
 let player2Score = 0;
+let gameOver = false;
 
 window.onload = function () {
     board = document.getElementById("board");
     board.height = boardHeight;
     board.width = boardWidth;
-    context = board.getContext("2d"); //used for drawing on the board
-
-    //draw initial player1
-    context.fillStyle = "skyblue";
-    context.fillRect(player1.x, player1.y, playerWidth, playerHeight);
+    context = board.getContext("2d");
 
     requestAnimationFrame(update);
-    document.addEventListener("keyup", movePlayer);
-}
+    document.addEventListener("keydown", movePlayer);
+    document.addEventListener("keyup", stopPlayer);
+    document.getElementById("resettombol").addEventListener("click", resetGameScores);
+};
 
 function update() {
+    if (gameOver) return;
+
     requestAnimationFrame(update);
     context.clearRect(0, 0, board.width, board.height);
 
     // player1
-    context.fillStyle = "skyblue";
+    context.fillStyle = "white";
     let nextPlayer1Y = player1.y + player1.velocityY;
     if (!outOfBounds(nextPlayer1Y)) {
         player1.y = nextPlayer1Y;
     }
-    // player1.y += player1.velocityY;
     context.fillRect(player1.x, player1.y, playerWidth, playerHeight);
 
     // player2
@@ -72,7 +71,6 @@ function update() {
     if (!outOfBounds(nextPlayer2Y)) {
         player2.y = nextPlayer2Y;
     }
-    // player2.y += player2.velocityY;
     context.fillRect(player2.x, player2.y, playerWidth, playerHeight);
 
     // ball
@@ -82,49 +80,40 @@ function update() {
     context.fillRect(ball.x, ball.y, ballWidth, ballHeight);
 
     if (ball.y <= 0 || (ball.y + ballHeight >= boardHeight)) {
-        // if ball touches top or bottom of canvas
-        ball.velocityY *= -1; //reverse direction
+        ball.velocityY *= -1;
     }
 
-    // if (ball.y <= 0) { 
-    //     // if ball touches top of canvas
-    //     ball.velocityY = 2; //go down
-    // }
-    // else if (ball.y + ballHeight >= boardHeight) {
-    //     // if ball touches bottom of canvas
-    //     ball.velocityY = -2; //go up
-    // }
-
-    //bounce the ball back
+    // collision detection
     if (detectCollision(ball, player1)) {
-        if (ball.x <= player1.x + player1.width) { //left side of ball touches right side of player 1 (left paddle)
-            ball.velocityX *= -1;   // flip x direction
+        if (ball.x <= player1.x + player1.width) {
+            ball.velocityX *= -1;
+            increaseBallSpeed();
         }
-    }
-    else if (detectCollision(ball, player2)) {
-        if (ball.x + ballWidth >= player2.x) { //right side of ball touches left side of player 2 (right paddle)
-            ball.velocityX *= -1;   // flip x direction
+    } else if (detectCollision(ball, player2)) {
+        if (ball.x + ballWidth >= player2.x) {
+            ball.velocityX *= -1;
+            increaseBallSpeed();
         }
     }
 
-    //game over
+    // game over logic
     if (ball.x < 0) {
         player2Score++;
+        checkGameOver();
         resetGame(1);
-    }
-    else if (ball.x + ballWidth > boardWidth) {
+    } else if (ball.x + ballWidth > boardWidth) {
         player1Score++;
+        checkGameOver();
         resetGame(-1);
     }
 
-    //score
+    // score display
     context.font = "45px sans-serif";
     context.fillText(player1Score, boardWidth / 5, 45);
     context.fillText(player2Score, boardWidth * 4 / 5 - 45, 45);
 
-    // draw dotted line down the middle
-    for (let i = 10; i < board.height; i += 25) { //i = starting y Position, draw a square every 25 pixels down
-        // (x position = half of boardWidth (middle) - 10), i = y position, width = 5, height = 5
+    // draw middle line
+    for (let i = 10; i < board.height; i += 25) {
         context.fillRect(board.width / 2 - 10, i, 5, 5);
     }
 }
@@ -134,28 +123,33 @@ function outOfBounds(yPosition) {
 }
 
 function movePlayer(e) {
-    //player1
-    if (e.code == "KeyW") {
-        player1.velocityY = -3;
-    }
-    else if (e.code == "KeyS") {
-        player1.velocityY = 3;
+    if (e.code === "KeyW") {
+        player1.velocityY = -4;
+    } else if (e.code === "KeyS") {
+        player1.velocityY = 4;
     }
 
-    //player2
-    if (e.code == "ArrowUp") {
-        player2.velocityY = -3;
+    if (e.code === "ArrowUp") {
+        player2.velocityY = -4;
+    } else if (e.code === "ArrowDown") {
+        player2.velocityY = 4;
     }
-    else if (e.code == "ArrowDown") {
-        player2.velocityY = 3;
+}
+
+function stopPlayer(e) {
+    if (e.code === "KeyW" || e.code === "KeyS") {
+        player1.velocityY = 0;
+    }
+    if (e.code === "ArrowUp" || e.code === "ArrowDown") {
+        player2.velocityY = 0;
     }
 }
 
 function detectCollision(a, b) {
-    return a.x < b.x + b.width &&   //a's top left corner doesn't reach b's top right corner
-        a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
-        a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
-        a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
+    return a.x < b.x + b.width &&
+           a.x + a.width > b.x &&
+           a.y < b.y + b.height &&
+           a.y + a.height > b.y;
 }
 
 function resetGame(direction) {
@@ -165,6 +159,29 @@ function resetGame(direction) {
         width: ballWidth,
         height: ballHeight,
         velocityX: direction,
-        velocityY: 2
+        velocityY: 2 // or 4 based on your preference
+    };
+}
+
+function increaseBallSpeed() {
+    ball.velocityX *= 1.4; // Adjust speed increase as needed
+    ball.velocityY *= 1.4;
+
+}
+
+function checkGameOver() {
+    if (player1Score >= 5 || player2Score >= 5) {
+        let winner = player1Score >= 5 ? "Player 1 Wins!" : "Player 2 Wins!";
+        context.font = "30px sans-serif";
+        context.fillText(winner, boardWidth / 2 - context.measureText(winner).width / 2, boardHeight / 2);
+        gameOver = true; 
     }
+}
+
+function resetGameScores() {
+    player1Score = 0;
+    player2Score = 0;
+    gameOver = false; // Reset game over flag
+    resetGame(1); // Reset the ball
+    requestAnimationFrame(update); // Restart the game loop
 }
