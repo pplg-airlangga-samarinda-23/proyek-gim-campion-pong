@@ -67,19 +67,8 @@ function update() {
     }
     context.fillRect(player1.x, player1.y, playerWidth, playerHeight);
 
-    // player2 (bot) logic
-    if (ball.x > boardWidth / 2) { // Only control the bot when the ball is on its side
-        if (ball.y < player2.y) {
-            player2.velocityY = -3; // Move up
-        } else if (ball.y + ballHeight > player2.y + player2.height) {
-            player2.velocityY = 3; // Move down
-        } else {
-            player2.velocityY = 0; // Stop if aligned with the ball
-        }
-    } else {
-        player2.velocityY = 0; // Stop moving if the ball is on player1's side
-    }
 
+    // player2
     let nextPlayer2Y = player2.y + player2.velocityY;
     if (!outOfBounds(nextPlayer2Y)) {
         player2.y = nextPlayer2Y;

@@ -1,15 +1,92 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport", content="width=device-width, initial-scale=1.0">
-        <title>Pong</title>
-        <link rel="stylesheet" href="pong.css">
-        <script src="pong.js"></script>
-    </head>
+<html lang="id">
 
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong</title>
+    <link rel="stylesheet" href="pong.css">
+    <script src="pong.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 80vh;
+            margin: 0;
+            background-color: #97f4f2;
+        }
+
+        #gameContainer {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #3636eb;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="homeScreen">
+        <h1>Pong Game</h1>
+        <div class="button-container">
+            <a href="#" class="button" id="playButton">Play Game</a>
+            <a href="credit.html" class="button">Credit</a>
+            <a href="1vs1.html" class="button">1 vs 1</a>
+            <a href="1vsrobot.html" class="button">1 vs Robot</a>
+        </div>
+        <footer>
+            &copy; 2024 Pembuat Game
+        </footer>
+    </div>
+
+    <div id="gameContainer">
         <canvas id="board"></canvas>
-        <button id="resettombol">reset tombol</button>
-    </body>
+    </div>
+
+    <script>
+
+        document.getElementById("playButton").addEventListener("click", function (event) {
+            event.preventDefault();
+            document.getElementById("homeScreen").style.display = "none";
+            document.getElementById("gameContainer").style.display = "block";
+            startGame();
+        });
+
+        function startGame() {
+
+            window.onload();
+        }
+    </script>
+</body>
+
 </html>
