@@ -167,14 +167,14 @@ function resetGame(direction) {
 }
 
 function increaseBallSpeed() {
-    ball.velocityX *= 1.0; // Adjust speed increase as needed
-    ball.velocityY *= 1.0;
+    ball.velocityX *= 1.15; // Adjust speed increase as needed
+    ball.velocityY *= 1.15;
 
 }
 
 function checkGameOver() {
     if (player1Score >= 5 || player2Score >= 5) {
-        let winner = player1Score >= 5 ? "Pemain Menang!" : "Bot Menang!";
+        let winner = player1Score >= 5 ? "Pemain 1 Menang!" : "Pemain 2 Menang!";
         context.font = "30px sans-serif";
         context.fillText(winner, boardWidth / 2 - context.measureText(winner).width / 2, boardHeight / 2);
         gameOver = true;

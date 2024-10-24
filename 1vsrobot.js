@@ -72,7 +72,7 @@ function update() {
         if (ball.y < player2.y) {
             player2.velocityY = -3; // Move up
         } else if (ball.y + ballHeight > player2.y + player2.height) {
-            player2.velocityY = 3; // Move down
+            player2.velocityY = 2; // Move down
         } else {
             player2.velocityY = 0; // Stop if aligned with the ball
         }
@@ -178,8 +178,8 @@ function resetGame(direction) {
 }
 
 function increaseBallSpeed() {
-    ball.velocityX *= 1.0; // Adjust speed increase as needed
-    ball.velocityY *= 1.0;
+    ball.velocityX *= 1.15; // Adjust speed increase as needed
+    ball.velocityY *= 1.15;
 
 }
 
